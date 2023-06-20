@@ -1,24 +1,10 @@
 const express = require('express');
-
 const app = express();
+
+const routes = require('./routes');
+
 app.use(express.json());
-
-app.get('/:id', (request, response) => {
-  const { id } = request.params;
-
-  response.send(`Eu quero comer ${id} Xis Saladas`);
-});
-
-app.get('/', (request, response) => {
-  const { prato, num } = request.query;
-  response.send(`Eu gosto de comer ${num} ${prato} no almoço`);
-});
-
-app.post('/users', (request, response) => {
-  const { name, email } = request.body;
-
-  response.send({ name, email });
-});
+app.use(routes);
 
 const PORT = 3333;
 

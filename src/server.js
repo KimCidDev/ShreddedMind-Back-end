@@ -8,6 +8,4 @@ app.use(routes);
 
 const PORT = 3333;
 
-app.listen(PORT, () =>
-  console.log(`Xis salada is running on Port ${PORT} e isso não importa`)
-);
+app.listen(PORT, () => {});

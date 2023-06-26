@@ -6,7 +6,8 @@ class UsersController {
 
     if (!name) {
       throw new AppError(
-        'O nome é Xis Salada ou outro que você escolher, mas pelo menos Xis Salada é obrigatório'
+        'O nome é Xis Salada ou outro que você escolher, mas pelo menos Xis Salada é obrigatório',
+        401
       );
     }
 

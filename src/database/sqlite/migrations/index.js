@@ -8,6 +8,5 @@ async function migrationsRun() {
   sqliteConnection()
     .then(db => db.exec(schemas))
     .catch(error => console.log(error));
-
-  module.exports = migrationsRun;
 }
+module.exports = migrationsRun;

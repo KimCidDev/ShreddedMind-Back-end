@@ -1,19 +1,37 @@
-const knex = require('knex');
-
+const knex = require('../database/knex');
 const AppError = require('../utils/AppError');
-const sqliteConnection = require('../database/sqlite');
-const { hash, compare } = require('bcryptjs');
 
 class NotesController {
   async create(request, response) {
     const { title, description, tags, links } = request.body;
     const { user_id } = request.params;
 
-    
+    const [note_id] = await knex('notes').insert({
+      title,
+      description,
+      user_id
+    });
 
-    console.log(typeof title);
+    const linksInsert = links.map(link => {
+      return {
+        note_id,
+        url: link
+      };
+    });
 
-    return response.json({ title, description, tags, links });
+    await knex('links').insert(linksInsert);
+
+    const tagsInsert = tags.map(name => {
+      return {
+        note_id,
+        name,
+        user_id
+      };
+    });
+
+    await knex('tags').insert(tagsInsert);
+
+    return response.json();
   }
 }
 

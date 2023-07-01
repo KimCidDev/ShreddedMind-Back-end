@@ -8,7 +8,7 @@ const LinksRoutes = require('./links.routes');
 
 routes.use('/users', UserRoutes);
 routes.use('/notes', NotesRoutes);
-routes.use('/tags', TagsRoutes);
-routes.use('/links', LinksRoutes);
+//routes.use('/tags', TagsRoutes);
+//routes.use('/links', LinksRoutes);
 
 module.exports = routes;

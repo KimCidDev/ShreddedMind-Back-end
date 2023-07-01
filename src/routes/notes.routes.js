@@ -1,9 +1,9 @@
 const { Router } = require('express');
-const notesRoutes = Router();
+const NotesRoutes = Router();
 
-const notesController = require('../controllers/NotesControllers');
-const NotesController = notesController();
+const NotesController = require('../controllers/NotesControllers');
+const notesController = new NotesController();
 
-notesRoutes.use('/:id', NotesController);
+NotesRoutes.post('/:user_id', notesController.create);
 
-module.exports = notesRoutes;
+module.exports = NotesRoutes;

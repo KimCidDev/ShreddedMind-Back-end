@@ -1,11 +1,20 @@
+const knex = require('knex');
+
 const AppError = require('../utils/AppError');
 const sqliteConnection = require('../database/sqlite');
 const { hash, compare } = require('bcryptjs');
 
-class UsersController {
+class NotesController {
   async create(request, response) {
-    const { title, description } = request.body;
+    const { title, description, tags, links } = request.body;
+    const { user_id } = request.params;
 
-    response.json({ title, description });
+    
+
+    console.log(typeof title);
+
+    return response.json({ title, description, tags, links });
   }
 }
+
+module.exports = NotesController;

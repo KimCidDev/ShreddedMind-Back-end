@@ -33,6 +33,40 @@ class NotesController {
 
     return response.json();
   }
+
+  async show(request, response) {
+    const { id } = request.params;
+
+    const note = await knex('notes').where({ id }).first();
+    const tags = await knex('tags').where({ note_id: id }).orderBy('name');
+    const links = await knex('links')
+      .where({ note_id: id })
+      .orderBy('created_at');
+
+    /* const gethour = hour => {
+      const created_at = note.created_at;
+      const lastEightChars = created_at.slice(-8);
+      const filteredValue = lastEightChars.split(':').join('');
+      hour = Number(filteredValue);
+
+      return hour;
+
+       console.log(gethour());
+    }; */
+
+    return response.json({ ...note, tags, links });
+  }
+
+  async delete(request, response) {
+    const { id } = request.params;
+
+    const note = await knex('notes').where({ id }).first().delete();
+
+    const fullNote = { ...note, tags, links };
+    console.log(fullNote.note);
+
+    return response.json({ ...note, tags, links });
+  }
 }
 
 module.exports = NotesController;

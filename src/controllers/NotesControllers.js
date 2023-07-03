@@ -60,12 +60,15 @@ class NotesController {
   async delete(request, response) {
     const { id } = request.params;
 
-    const note = await knex('notes').where({ id }).first().delete();
-
-    const fullNote = { ...note, tags, links };
-    console.log(fullNote.note);
+    await knex('notes').where({ id }).delete();
 
     return response.json({ ...note, tags, links });
+  }
+
+  async index(request, response) {
+    const allNotes = await knex('notes').select('*');
+
+    return response.json({ ...allNotes });
   }
 }
 

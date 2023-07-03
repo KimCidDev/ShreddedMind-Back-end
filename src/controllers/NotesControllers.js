@@ -66,9 +66,9 @@ class NotesController {
   }
 
   async index(request, response) {
-    const allNotes = await knex('notes').select('*');
+    const notes = await knex.select('*').from('notes');
 
-    return response.json({ ...allNotes });
+    return response.json({ notes });
   }
 }
 

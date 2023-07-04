@@ -66,9 +66,15 @@ class NotesController {
   }
 
   async index(request, response) {
-    const notes = await knex.select('*').from('notes');
+    const { title, user_id } = request.query;
 
-    return response.json({ notes });
+    const notes = await knex('notes')
+    .where({ user_id })
+    .whereLike('title', `%${title}%`)
+    .orderBy('title');
+    // ESSA É UMA ALTERNATIVA AO CÓDIGO ACIMA > const notes = await knex.select('*').from('notes');
+    
+    return response.json(notes);
   }
 }
 

@@ -11,6 +11,6 @@ routes.use('/users', UserRoutes);
 routes.use('/sessions', SessionsRoutes);
 routes.use('/notes', NotesRoutes);
 routes.use('/tags', TagsRoutes);
-//routes.use('/links', LinksRoutes);
+routes.use('/links', LinksRoutes);
 
 module.exports = routes;

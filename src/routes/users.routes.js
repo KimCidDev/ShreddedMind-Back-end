@@ -4,6 +4,9 @@ const uploadConfig = require('../configs/upload');
 
 const UsersController = require('../controllers/UsersControllers');
 const usersController = new UsersController();
+const UsersAvatarController = require('../controllers/UsersAvatarControllers');
+const usersAvatarController = new UsersAvatarController();
+
 const ensureAuthenticated = require('../middleware/ensureAuthenticated');
 
 const UserRoutes = Router();
@@ -16,10 +19,7 @@ UserRoutes.patch(
   '/avatar',
   ensureAuthenticated,
   upload.single('avatar'),
-  (request, response) => {
-    console.log(request.file.filename);
-    response.json();
-  }
+  usersAvatarController.update
 );
 
 module.exports = UserRoutes;

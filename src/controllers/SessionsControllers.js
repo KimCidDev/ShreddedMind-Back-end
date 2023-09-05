@@ -11,7 +11,7 @@ class SessionsController {
     const user = await knex('users').where({ email }).first();
 
     if (!user) {
-      throw new AppError('Tu tá viajando. Não tem esse aí não', 404);
+      throw new AppError('Tu tá viajando. Não tem esse aí não', 404);C
     }
 
     const passwordCheck = await compare(password, user.password);

@@ -29,6 +29,7 @@ class UsersController {
 
   async update(request, response) {
     const { name, email, password, old_password } = request.body;
+    console.log({ password, old_password });
     const user_id = request.user.id;
 
     const database = await sqliteConnection();
@@ -60,14 +61,23 @@ class UsersController {
       );
     }
 
-    if (password && old_password) {
-      const checkOldPassword = compare(old_password, user.password);
+    if (!password && old_password) {
+      throw new AppError('Por favor, coloque a nova senha.');
+    }
+
+    if (old_password && password != old_password) {
+      const checkOldPassword = await compare(old_password, user.password);
 
       if (!checkOldPassword) {
-        throw new AppError('Não é a mesma senha.');
+        throw new AppError('tu tá inventando uma senha antiga');
+      } else if (checkOldPassword) {
+        user.password = await hash(password, 8);
+      } else {
+        console.log('buraco negro');
       }
-
-      user.password = await hash(password, 8);
+      
+    } else {
+      throw new AppError('tu tá usando a mesma senha');
     }
 
     await database.run(

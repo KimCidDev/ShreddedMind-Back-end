@@ -75,7 +75,7 @@ class UsersController {
       } else {
         console.log('buraco negro');
       }
-    } else if (old_password === '' && password == '') {
+    } else if (old_password === '' && password === '') {
       console.log('bom, tu sabe que esse é o caso');
     } else {
       throw new AppError('tu tá usando a mesma senha');

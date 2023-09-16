@@ -5,6 +5,7 @@ const authConfig = require('../configs/auth');
 function ensureAuthenticated(request, response, next) {
   const authHeader = request.headers.authorization;
 
+  console.log('authHeader abaixo');
   console.log(authHeader);
 
   if (!authHeader) {
@@ -20,7 +21,7 @@ function ensureAuthenticated(request, response, next) {
     request.user = {
       id: Number(user_id)
     };
-
+    console.log('O próximo passo será chamado');
     return next();
   } catch {
     throw new AppError('JWT Token inválido', 401);

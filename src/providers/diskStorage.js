@@ -4,24 +4,36 @@ const uploadConfig = require('../configs/upload');
 
 class DiskStorage {
   async saveFile(file) {
-    await fs.promises.rename(
-      path.resolve(uploadConfig.TMP_FOLDER, file),
-      path.resolve(uploadConfig.UPLOADS_FOLDER, file)
-    );
+    try {
+      // Use the unique name generated during upload
+      const fileName = file;
 
-    return file;
+      await fs.promises.rename(
+        path.resolve(uploadConfig.TMP_FOLDER, fileName),
+        path.resolve(uploadConfig.UPLOADS_FOLDER, fileName)
+      );
+
+      return fileName;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  async deleteFile(file) {
-    const filePath = path.resolve(uploadConfig.UPLOADS_FOLDER, file);
+  async deleteFile(fileName) {
+    const filePath = path.resolve(uploadConfig.UPLOADS_FOLDER, fileName);
 
-    try {
-      await fs.promises.stat(filePath);
-    } catch {
-      return;
+    console.log('Deleting file:', filePath); // Add this line for debugging
+
+    if (fs.existsSync(filePath)) {
+      try {
+        await fs.promises.unlink(filePath);
+        console.log('File deleted:', fileName); // Add this line for debugging
+      } catch (error) {
+        console.log('Error deleting file:', error);
+      }
+    } else {
+      console.log('File not found:', fileName);
     }
-
-    await fs.promises.unlink(filePath);
   }
 }
 
